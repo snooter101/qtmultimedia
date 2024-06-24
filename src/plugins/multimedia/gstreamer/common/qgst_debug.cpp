@@ -373,6 +373,14 @@ QDebug operator<<(QDebug dbg, GstState state)
     return dbg << gst_element_state_get_name(state);
 }
 
+// PETROSYS CHANGE
+// define a function from more recent versions of GStreamer - just return
+// an unknown as it's only for debugging.
+const gchar* gst_state_change_get_name(GstStateChange transition)
+{
+  return "Unknown state change";
+}
+
 QDebug operator<<(QDebug dbg, GstStateChange transition)
 {
     return dbg << gst_state_change_get_name(transition);

@@ -201,12 +201,14 @@ QAudioFormat sampleSpecToAudioFormat(const pa_sample_spec &spec)
 
 QUtf8StringView currentError(const pa_context *context)
 {
-    return pa_strerror(pa_context_errno(context));
+    // PETROSYS CHANGE - need to cast away const for very old version of pulseaudio on EL7
+    return pa_strerror(pa_context_errno(const_cast<pa_context*>(context)));
 }
 
 QUtf8StringView currentError(const pa_stream *stream)
 {
-    return currentError(pa_stream_get_context(stream));
+    // PETROSYS CHANGE - need to cast away const for very old version of pulseaudio on EL7
+    return currentError(pa_stream_get_context(const_cast<pa_stream*>(stream)));
 }
 
 } // namespace QPulseAudioInternal
